@@ -514,8 +514,9 @@ class BERTopic:
                                         index=documents_per_topic.Topic).to_dict()
 
             # Fill dataframe with results
+            # KK_EDITED
             topics_at_timestamp = [(topic,
-                                    ", ".join([words[0] for words in values][:5]),
+                                    ", ".join([words[0] for words in values][:10]),
                                     topic_frequency[topic],
                                     timestamp) for topic, values in words_per_topic.items()]
             topics_over_time.extend(topics_at_timestamp)
@@ -1458,7 +1459,8 @@ class BERTopic:
         self.c_tf_idf, words = self._c_tf_idf(documents_per_topic)
         self.topics = self._extract_words_per_topic(words)
         self._create_topic_vectors()
-        self.topic_names = {key: f"{key}_" + "_".join([word[0] for word in values[:4]])
+        # KK_EDITED
+        self.topic_names = {key: f"{key}_" + "_".join([word[0] for word in values[:9]])
                             for key, values in
                             self.topics.items()}
 
@@ -1492,7 +1494,10 @@ class BERTopic:
                     points = raw_tree['child'][(raw_tree['parent'] == leaf) & (raw_tree['lambda_val'] == max_lambda)]
                     result = np.hstack((result, points))
 
-                representative_docs[topic] = list(np.random.choice(result, 3, replace=False).astype(int))
+                try:
+                    representative_docs[topic] = list(np.random.choice(result, 3, replace=False).astype(int))
+                except ValueError:
+                    representative_docs[topic] = list(np.random.choice(result, 3, replace=True).astype(int))
 
         # Convert indices to documents
         self.representative_docs = {topic: [documents.iloc[doc_id].Document for doc_id in doc_ids]

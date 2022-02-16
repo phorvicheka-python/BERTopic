@@ -55,7 +55,10 @@ def visualize_topics_per_class(topic_model,
         selected_topics = topic_model.get_topic_freq().Topic.values
 
     # Prepare data
-    topic_names = {key: value[:40] + "..." if len(value) > 40 else value
+    # KK_EDITED
+    # topic_names = {key: value[:40] + "..." if len(value) > 40 else value
+    #                for key, value in topic_model.topic_names.items()}
+    topic_names = {key: value
                    for key, value in topic_model.topic_names.items()}
     topics_per_class["Name"] = topics_per_class.Topic.map(topic_names)
     data = topics_per_class.loc[topics_per_class.Topic.isin(selected_topics), :]

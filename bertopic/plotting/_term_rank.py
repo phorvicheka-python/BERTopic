@@ -70,8 +70,9 @@ def visualize_term_rank(topic_model,
     for topic, x, y in zip(topic_ids, indices, values):
         if not any(y > 1.5):
             # labels
+            # KK_EDITED
             label = f"<b>Topic {topic}</b>:" + "_".join([word[0] for word in topic_model.get_topic(topic)])
-            label = label[:50]
+            # label = label[:50]
 
             # line parameters
             color = "red" if topic in topics else "black"

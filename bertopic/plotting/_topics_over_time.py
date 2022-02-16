@@ -55,7 +55,10 @@ def visualize_topics_over_time(topic_model,
         selected_topics = topic_model.get_topic_freq().Topic.values
 
     # Prepare data
-    topic_names = {key: value[:40] + "..." if len(value) > 40 else value
+    # KK_EDITED
+    # topic_names = {key: value[:40] + "..." if len(value) > 40 else value
+    #                for key, value in topic_model.topic_names.items()}
+    topic_names = {key: value
                    for key, value in topic_model.topic_names.items()}
     topics_over_time["Name"] = topics_over_time.Topic.map(topic_names)
     data = topics_over_time.loc[topics_over_time.Topic.isin(selected_topics), :]
@@ -65,6 +68,7 @@ def visualize_topics_over_time(topic_model,
     for index, topic in enumerate(data.Topic.unique()):
         trace_data = data.loc[data.Topic == topic, :]
         topic_name = trace_data.Name.values[0]
+        print(topic_name)
         words = trace_data.Words.values
         if normalize_frequency:
             y = normalize(trace_data.Frequency.values.reshape(1, -1))[0]

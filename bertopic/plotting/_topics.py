@@ -53,7 +53,8 @@ def visualize_topics(topic_model,
     # Extract topic words and their frequencies
     topic_list = sorted(topics)
     frequencies = [topic_model.topic_sizes[topic] for topic in topic_list]
-    words = [" | ".join([word[0] for word in topic_model.get_topic(topic)[:5]]) for topic in topic_list]
+    # KK_EDITED
+    words = [" | ".join([word[0] for word in topic_model.get_topic(topic)[:10]]) for topic in topic_list]
 
     # Embed c-TF-IDF into 2D
     all_topics = sorted(list(topic_model.get_topics().keys()))

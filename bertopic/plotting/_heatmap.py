@@ -90,8 +90,9 @@ def visualize_heatmap(topic_model,
 
     # Create nicer labels
     new_labels = [[[str(topic), None]] + topic_model.get_topic(topic) for topic in sorted_topics]
-    new_labels = ["_".join([label[0] for label in labels[:4]]) for labels in new_labels]
-    new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
+    # KK_EDITED
+    new_labels = ["_".join([label[0] for label in labels[:9]]) for labels in new_labels]
+    # new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
 
     fig = px.imshow(distance_matrix,
                     labels=dict(color="Similarity Score"),

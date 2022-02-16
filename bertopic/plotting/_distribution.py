@@ -54,9 +54,10 @@ def visualize_distribution(topic_model,
     for idx in labels_idx:
         words = topic_model.get_topic(idx)
         if words:
-            label = [word[0] for word in words[:5]]
+            # KK_EDITED
+            label = [word[0] for word in words[:10]]
             label = f"<b>Topic {idx}</b>: {'_'.join(label)}"
-            label = label[:40] + "..." if len(label) > 40 else label
+            # label = label[:40] + "..." if len(label) > 40 else label
             labels.append(label)
         else:
             vals.remove(probabilities[idx])

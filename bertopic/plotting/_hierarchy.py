@@ -80,8 +80,9 @@ def visualize_hierarchy(topic_model,
     axis = "yaxis" if orientation == "left" else "xaxis"
     new_labels = [[[str(topics[int(x)]), None]] + topic_model.get_topic(topics[int(x)])
                   for x in fig.layout[axis]["ticktext"]]
-    new_labels = ["_".join([label[0] for label in labels[:4]]) for labels in new_labels]
-    new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
+    # KK_EDITED
+    new_labels = ["_".join([label[0] for label in labels[:9]]) for labels in new_labels]
+    # new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
 
     # Stylize layout
     fig.update_layout(
