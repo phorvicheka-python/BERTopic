@@ -61,8 +61,11 @@ def visualize_topics_over_time(topic_model,
     if topic_model.custom_labels is not None and custom_labels:
         topic_names = {key: topic_model.custom_labels[key + topic_model._outliers] for key, _ in topic_model.topic_names.items()}
     else:
-        topic_names = {key: value[:40] + "..." if len(value) > 40 else value
-                       for key, value in topic_model.topic_names.items()}
+        # KK_EDITED
+        topic_names = {key: value
+                   for key, value in topic_model.topic_names.items()}
+        # topic_names = {key: value[:40] + "..." if len(value) > 40 else value
+        #                for key, value in topic_model.topic_names.items()}
     topics_over_time["Name"] = topics_over_time.Topic.map(topic_names)
     data = topics_over_time.loc[topics_over_time.Topic.isin(selected_topics), :].sort_values(["Topic", "Timestamp"])
     

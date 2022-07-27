@@ -12,7 +12,8 @@ def visualize_topics(topic_model,
                      topics: List[int] = None,
                      top_n_topics: int = None,
                      width: int = 650,
-                     height: int = 650) -> go.Figure:
+                     height: int = 650,
+                     words_separator: str = ", ") -> go.Figure:
     """ Visualize topics, their sizes, and their corresponding words
 
     This visualization is highly inspired by LDAvis, a great visualization
@@ -55,7 +56,9 @@ def visualize_topics(topic_model,
     # Extract topic words and their frequencies
     topic_list = sorted(topics)
     frequencies = [topic_model.topic_sizes[topic] for topic in topic_list]
-    words = [" | ".join([word[0] for word in topic_model.get_topic(topic)[:5]]) for topic in topic_list]
+    # KK_EDITED
+    words = [words_separator.join([word[0] for word in topic_model.get_topic(topic)[:10]]) for topic in topic_list]
+    # words = [" | ".join([word[0] for word in topic_model.get_topic(topic)[:5]]) for topic in topic_list]
 
     # Embed c-TF-IDF into 2D
     all_topics = sorted(list(topic_model.get_topics().keys()))

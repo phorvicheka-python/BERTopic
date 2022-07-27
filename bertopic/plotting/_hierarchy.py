@@ -19,7 +19,8 @@ def visualize_hierarchy(topic_model,
                         hierarchical_topics: pd.DataFrame = None,
                         linkage_function: Callable[[csr_matrix], np.ndarray] = None,
                         distance_function: Callable[[csr_matrix], csr_matrix] = None,
-                        color_threshold: int = 1) -> go.Figure:
+                        color_threshold: int = 1,
+                        words_separator: str = ", ") -> go.Figure:
     """ Visualize a hierarchical structure of the topics
 
     A ward linkage function is used to perform the
@@ -135,7 +136,9 @@ def visualize_hierarchy(topic_model,
         new_labels = [[[str(topics[int(x)]), None]] + topic_model.get_topic(topics[int(x)])
                       for x in fig.layout[axis]["ticktext"]]
         new_labels = ["_".join([label[0] for label in labels[:4]]) for labels in new_labels]
-        new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
+        # KK_EDITED
+        new_labels = [words_separator.join([label[0] for label in labels[:9]]) for labels in new_labels]
+        # new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
 
     # Stylize layout
     fig.update_layout(

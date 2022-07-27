@@ -89,6 +89,7 @@ class BERTopic:
                  hdbscan_model: hdbscan.HDBSCAN = None,
                  vectorizer_model: CountVectorizer = None,
                  verbose: bool = False,
+                 words_separator: str = ", ",
                  ):
         """BERTopic initialization
 
@@ -159,6 +160,7 @@ class BERTopic:
         self.diversity = diversity
         self.verbose = verbose
         self.seed_topic_list = seed_topic_list
+        self.words_separator = words_separator
 
         # Embedding model
         self.language = language if not embedding_model else None
@@ -535,10 +537,15 @@ class BERTopic:
                                         index=documents_per_topic.Topic).to_dict()
 
             # Fill dataframe with results
+            # KK_EDITED
             topics_at_timestamp = [(topic,
-                                    ", ".join([words[0] for words in values][:5]),
+                                    self.words_separator.join([words[0] for words in values][:10]),
                                     topic_frequency[topic],
                                     timestamp) for topic, values in words_per_topic.items()]
+            # topics_at_timestamp = [(topic,
+            #                         ", ".join([words[0] for words in values][:5]),
+            #                         topic_frequency[topic],
+            #                         timestamp) for topic, values in words_per_topic.items()]
             topics_over_time.extend(topics_at_timestamp)
 
             if evolution_tuning:
@@ -2164,9 +2171,13 @@ class BERTopic:
         self.c_tf_idf, words = self._c_tf_idf(documents_per_topic)
         self.topics = self._extract_words_per_topic(words)
         self._create_topic_vectors()
-        self.topic_names = {key: f"{key}_" + "_".join([word[0] for word in values[:4]])
+        # KK_EDITED
+        self.topic_names = {key: f"{key}_" + self.words_separator.join([word[0] for word in values[:10]])
                             for key, values in
                             self.topics.items()}
+        # self.topic_names = {key: f"{key}_" + "_".join([word[0] for word in values[:4]])
+        #                     for key, values in
+        #                     self.topics.items()}
 
     def _save_representative_docs(self, documents: pd.DataFrame):
         """ Save the most representative docs (3) per topic

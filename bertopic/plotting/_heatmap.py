@@ -13,7 +13,8 @@ def visualize_heatmap(topic_model,
                       n_clusters: int = None,
                       custom_labels: bool = False,
                       width: int = 800,
-                      height: int = 800) -> go.Figure:
+                      height: int = 800,
+                      words_separator: str = ", ") -> go.Figure:
     """ Visualize a heatmap of the topic's similarity matrix
 
     Based on the cosine similarity matrix between topic embeddings,
@@ -99,7 +100,9 @@ def visualize_heatmap(topic_model,
     else:
         new_labels = [[[str(topic), None]] + topic_model.get_topic(topic) for topic in sorted_topics]
         new_labels = ["_".join([label[0] for label in labels[:4]]) for labels in new_labels]
-        new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
+        # KK_EDITED
+        new_labels = [words_separator.join([label[0] for label in labels[:9]]) for labels in new_labels]
+        # new_labels = [label if len(label) < 30 else label[:27] + "..." for label in new_labels]
 
     fig = px.imshow(distance_matrix,
                     labels=dict(color="Similarity Score"),

@@ -78,7 +78,8 @@ def visualize_term_rank(topic_model,
                 label = topic_model.custom_labels[topic + topic_model._outliers]
             else:
                 label = f"<b>Topic {topic}</b>:" + "_".join([word[0] for word in topic_model.get_topic(topic)])
-                label = label[:50]
+                # KK_EDITED
+                # label = label[:50]
 
             # line parameters
             color = "red" if topic in topics else "black"
